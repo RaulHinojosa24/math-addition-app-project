@@ -1,32 +1,39 @@
-//generate random numbers
-let firstNumber = parseInt(Math.random()*10);
-let secondNumber = parseInt(Math.random()*10);
+const maxNumber = 100;
+let solution;
 
-//get the total
-let total = firstNumber + secondNumber;
+$(document).ready(function () {
+    setAddition();
 
-//display numbers on the canvas
-let primary = document.getElementById('primary-number');
-    primary.innerHTML = `<p>${firstNumber}</p>`;
+    $("#btn").click(() => {
+        let userSolution = $("#guess").val();
 
-let secondary = document.getElementById('secondary-number');
-    secondary.innerHTML = `<p>${secondNumber}</p>`
+        if (userSolution == solution) {
+            alert("Correct!");
+        } else {
+            alert("Incorrect! The answer is: " + solution);
+        }
 
-
-//get guess from user
-let button = document.getElementById('btn')
-
-button.addEventListener('click', function(){
-
-let guess = document.getElementById('guess').value;
-    guess = Number(guess);
-//check answer
-if (guess === total){
-    alert('Correct');
-    window.location.reload()
-} else {
-    alert('Sorry. Incorrect. The correct answer was ' + total + '.')
-    window.location.reload()
-
-}
+        setAddition();
     });
+});
+
+function setAddition() {
+    const firstNumer = generateNumber(maxNumber);
+    const secondNumer = generateNumber(maxNumber);
+    solution = firstNumer + secondNumer;
+
+    loadNumbers(firstNumer, secondNumer);
+
+    return solution;
+}
+
+function loadNumbers(firstNumer, secondNumer) {
+    $("#primary-number").text(firstNumer);
+    $("#secondary-number").text(secondNumer);
+    $("#guess").val("");
+    $("#guess").focus();
+}
+
+function generateNumber(max) {
+    return Math.floor(Math.random() * max);
+}
